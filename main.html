@@ -1,0 +1,78 @@
+<!-- e3ba76adc7ad460d951f8beedeb8170e -->
+<!-- https://newsapi.org/v2/everything?q=tesla&from=2021-09-18&sortBy=publishedAt&apiKey=e3ba76adc7ad460d951f8beedeb8170e -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My News App</title>
+</head>
+<style>
+
+img{
+  height:400px;
+  width: 500px;
+}
+
+#bydefault{
+
+    display: grid;
+    grid-template-columns: repeat(2,40%);
+    gap: 8%;
+    margin-left: 3%;
+}
+
+</style>
+<body>
+    <h1>TOP NEWS</h1>
+    <input type="text" id="search" placeholder="news topics">
+    <button onclick="searches()">search</button>
+    <div id="bydefault"></div>
+    <div id="search_p"></div>
+</body>
+</html>
+<script>
+let container = document.getElementById("bydefault")
+async function News(){
+let container = document.getElementById("bydefault")
+    let res = await fetch(`http://newsapi.org/v2/everything?q=school&from=2021-09-18&sortBy=publishedAt&apiKey=e3ba76adc7ad460d951f8beedeb8170e`)
+    data = await res.json()
+     console.log(data.articles)
+     data.articles.forEach(element => {
+         
+     
+     let image = document.createElement("img")
+     let hed = document.createElement("p")
+     let cont2 = document.createElement("p")
+    image.src=element.urlToImage
+    hed.textContent=element.title
+    cont2.textContent=element.description
+    let cont1 = document.createElement("div")
+    cont1.append(hed,image,cont2)
+    container.append(cont1)
+
+});
+
+}
+News()
+async function searches(){
+    container.innerHTML=null
+     let word = document.getElementById("search").value
+     let p = document.getElementById("search_p")
+let res = await fetch(`http://newsapi.org/v2/everything?q=${word}&from=2021-09-18&sortBy=publishedAt&apiKey=e3ba76adc7ad460d951f8beedeb8170e`)
+data = await res.json()
+console.log(data.articles)
+data.articles.forEach(element => {
+let p1 = document.createElement("p")
+let image = document.createElement("img")
+let content = document.createElement("p")
+content.innerText=element.description
+image.src=element.urlToImage
+console.log(image.src)
+p1.append(element.title)
+p.append(p1,image,content)
+});
+}
+
+</script>
